@@ -1,15 +1,11 @@
 pipeline {
     agent any
     
-    environment {
-        SONAR_HOST_URL = 'http://localhost:9000'   // SonarQube URL
-        SONAR_TOKEN = credentials('sonar-token')    // Add SonarQube token in Jenkins credentials
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Fetch Latest Code') {
             steps {
-                checkout scm
+                bat 'git fetch --all'
+                bat 'git reset --hard origin/main'
             }
         }
         stage('Build') {
@@ -29,7 +25,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                bat './deploy.sh'
+                // Comment this out if you don’t have a deploy script yet
+                // bat './deploy.sh'
             }
         }
     }
