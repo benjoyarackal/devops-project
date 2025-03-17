@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    
+    environment {
+        SONAR_HOST_URL = 'http://localhost:9000'   // SonarQube URL
+        SONAR_TOKEN = credentials('sonar-token')    // Add SonarQube token in Jenkins credentials
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                bat 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                bat 'mvn test'
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                bat 'sonar-scanner'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat './deploy.sh'
+            }
+        }
+    }
+}
