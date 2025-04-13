@@ -1,0 +1,35 @@
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Maven target folder
+target/
+
+# Ignore IDE files
+*.iml
+.idea/
+.vscode/
+
+# Ignore logs and build files
+*.log
+
+# Ignore sensitive files and personal config
+*.bash_history
+*.config
+*.conda
+*.cache
+*.docker
+*.gradle
+*.metadata
+*.node_repl_history
+*.ssh
+*.vscode
+
+# Ignore unnecessary folders
+Application Data/
+Desktop/
+Downloads/
+Documents/
+Music/
+Pictures/
+Videos/
