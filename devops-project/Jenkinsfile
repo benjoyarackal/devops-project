@@ -1,31 +1,48 @@
 pipeline {
     agent any
-    
+
+    tools {
+        maven 'Maven_3.9' // Make sure this matches the Maven name in Jenkins Global Tool Configuration
+    }
+
     stages {
         stage('Fetch Latest Code') {
             steps {
+                echo '🔄 Fetching latest code from origin/main...'
                 bat 'git fetch --all'
                 bat 'git reset --hard origin/main'
             }
         }
+
         stage('Build') {
             steps {
+                echo '🏗️ Building the project...'
                 bat 'mvn clean install'
             }
         }
+
         stage('Test') {
             steps {
+                echo '🧪 Running tests...'
                 bat 'mvn test'
             }
         }
+
         stage('Code Analysis') {
             steps {
+                echo '🔍 Running static code analysis with SonarScanner...'
+                // Make sure sonar-scanner is installed and configured correctly
                 bat 'sonar-scanner'
             }
         }
+
         stage('Deploy') {
             steps {
-                // Comment this out if you don’t have a deploy script yet
+                echo '🚀 Deploying the Spring Boot application...'
+                // Starts the Spring Boot app (use for local dev/demo)
+                bat 'mvn spring-boot:run'
+
+                // OPTIONAL: replace with your cloud deploy script if needed
                 // bat './deploy.sh'
             }
         }
